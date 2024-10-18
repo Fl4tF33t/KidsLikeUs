@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d773257d62888946a9da6f3dcf203fc, type: 3}
+  m_Name: Snowflake SO
+  m_EditorClassIdentifier: 
+  entityName: Snowflake
+  description: 
+  introDialogue: 
+  type: 2
+  tasks:
+  - {fileID: 11400000, guid: c9ea0c542e210f14d8ca0acfe937732e, type: 2}
+  - {fileID: 11400000, guid: 992cba5c222bf004ea76da1a06ca03b3, type: 2}
