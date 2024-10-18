@@ -1,6 +1,4 @@
 using UnityEngine;
-using System;
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -15,17 +13,6 @@ public class EntitySO : ScriptableObject
 
     public bool prerequisite;
     public Prerequisites[] prerequisites;
-
-    public virtual void FirstTimeInteraction()
-    {
-        Debug.Log("My name is " + entityName);
-    }
-
-    public virtual void Interact()
-    {
-        //what you normally do, i guess it will be to repeat what your current task is
-        //Or tell you what you need to do next
-    }
 
     public virtual void ValidateEntityData()
     {

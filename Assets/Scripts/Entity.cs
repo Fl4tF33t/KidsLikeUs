@@ -3,10 +3,10 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     public EntitySO entitySO;
-    public enum EntityStatus { None, InProgress, Completed, Failed }
-    public EntityStatus entityStatus = EntityStatus.None;
-
-    private bool firstTimeInteraction;
+    public enum EntityStatus { None, InProgress, Completed}
+    [SerializeField]
+    private EntityStatus entityStatus = EntityStatus.None;
+    private bool firstTimeInteraction = true;
 
     private void Awake()
     {
@@ -31,6 +31,7 @@ public class Entity : MonoBehaviour
                 if (!prerequisite.CheckPrerequisite())
                 {
                     Debug.Log("Prerequisite not met");
+                    UnavailableInteraction();
                     return;
                 }
             }
@@ -39,8 +40,23 @@ public class Entity : MonoBehaviour
         {
             entityStatus = EntityStatus.InProgress;
             firstTimeInteraction = false;
-            entitySO.FirstTimeInteraction();
+            FirstTimeInteraction();
         }
     }
 
+    protected virtual void UnavailableInteraction()
+    {
+        //what does this npc do if the prereq are not met, maybe inform them what they need to do
+        //or just say that this part is not available yet,  ask help from mthe guide
+    }
+
+    protected virtual void FirstTimeInteraction()
+    {
+        //Do something for the first time, intro and tell about itself
+    }
+
+    public EntityStatus GetEntityStatus()
+    {
+        return entityStatus;
+    }
 }

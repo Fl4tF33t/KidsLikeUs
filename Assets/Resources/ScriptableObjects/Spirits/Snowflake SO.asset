@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Snowflake SO
   m_EditorClassIdentifier: 
   entityName: Snowflake
-  description: 
+  entityDescription: 
   introDialogue: 
+  prerequisite: 0
+  prerequisites:
+  - entitySO: {fileID: 0}
+    taskSO: {fileID: 0}
   type: 2
   tasks:
   - {fileID: 11400000, guid: c9ea0c542e210f14d8ca0acfe937732e, type: 2}
