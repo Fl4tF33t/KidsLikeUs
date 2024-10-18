@@ -1,40 +1,46 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Entity : MonoBehaviour
 {
     public EntitySO entitySO;
-    [HideInInspector]
-    public TaskSO currentTask;
-    public enum TaskStatus { None, InProgress, Completed, Failed }
-    [HideInInspector]
-    public TaskStatus taskStatus = TaskStatus.None;
+    public enum EntityStatus { None, InProgress, Completed, Failed }
+    public EntityStatus entityStatus = EntityStatus.None;
+
+    private bool firstTimeInteraction;
 
     private void Awake()
     {
         InitializeEntity();
     }
 
-    private void InitializeEntity()
+    protected virtual void InitializeEntity()
     {
         if (entitySO == null)
         {
             Debug.LogError("EntitySO is null");
             return;
         }
+    }
 
-        if (entitySO is SpiritSO spiritSO)
+    public virtual void Interact()
+    {
+        if (entitySO.prerequisite)
         {
-            if (spiritSO.tasks != null && spiritSO.tasks.Length > 0 && currentTask == null)
+            foreach (Prerequisites prerequisite in entitySO.prerequisites)
             {
-                currentTask = spiritSO.tasks[0];
+                if (!prerequisite.CheckPrerequisite())
+                {
+                    Debug.Log("Prerequisite not met");
+                    return;
+                }
             }
+        }
+        if (firstTimeInteraction)
+        {
+            entityStatus = EntityStatus.InProgress;
+            firstTimeInteraction = false;
+            entitySO.FirstTimeInteraction();
         }
     }
 
-    void Start()
-    {
-        entitySO.FirstTimeInteraction();
-        currentTask.StartTask();
-    }
 }

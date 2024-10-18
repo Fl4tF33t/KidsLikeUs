@@ -1649,8 +1649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entitySO: {fileID: 11400000, guid: f45969ca049f79748ac40ec3e0c2b271, type: 2}
-  currentTask: {fileID: 0}
-  taskStatus: 0
+  entityStatus: 0
 --- !u!1 &1850521302
 GameObject:
   m_ObjectHideFlags: 0

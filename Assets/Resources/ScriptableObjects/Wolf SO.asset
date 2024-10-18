@@ -9,15 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d773257d62888946a9da6f3dcf203fc, type: 3}
-  m_Name: Earth SO
+  m_Script: {fileID: 11500000, guid: eed5db3c0c88b2543bcad11942a67d1c, type: 3}
+  m_Name: Wolf SO
   m_EditorClassIdentifier: 
   entity:
     name: 
     description: 
     introDialogue: 
-  entityName: Earth
-  description: 
-  introDialogue: 
-  type: 3
-  tasks: []
+  type: 0
+  tasks:
+  - {fileID: 11400000, guid: c9ea0c542e210f14d8ca0acfe937732e, type: 2}

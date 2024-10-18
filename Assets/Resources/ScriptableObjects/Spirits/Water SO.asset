@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Water SO
   m_EditorClassIdentifier: 
   entityName: Water
-  description: 
+  entityDescription: 
   introDialogue: 
+  prerequisite: 0
+  prerequisites: []
   type: 1
   tasks: []
