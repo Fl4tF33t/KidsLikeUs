@@ -6,6 +6,5 @@ public class SpiritSO : EntitySO
     public enum Type{ Snow, Water, Fire, Earth}
 
     public Type type;
-
-    public TaskSO[] tasks;
+    
 }

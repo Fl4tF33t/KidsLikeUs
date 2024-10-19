@@ -45,12 +45,6 @@ public class TaskSOEditor : Editor
                 EditorGUI.indentLevel -= 2;
             }
         }
-        EditorGUILayout.Space(15);
-
-        EditorGUI.indentLevel -= 2;
-        EditorGUILayout.LabelField("State", EditorStyles.boldLabel);
-        EditorGUI.indentLevel++;
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("taskState"));
 
         EditorGUILayout.Space(25);
 

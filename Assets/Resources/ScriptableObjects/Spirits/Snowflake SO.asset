@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityName: Snowflake
   entityDescription: 
-  introDialogue: 
-  prerequisite: 0
+  introDialogue: Welcome to this safe space.....
+  unavailableDialogue: 
+  hasPrerequisite: 1
   prerequisites:
-  - entitySO: {fileID: 0}
+    entity: []
     taskSO: {fileID: 0}
-  type: 2
+  hasTask: 1
   tasks:
   - {fileID: 11400000, guid: c9ea0c542e210f14d8ca0acfe937732e, type: 2}
   - {fileID: 11400000, guid: 992cba5c222bf004ea76da1a06ca03b3, type: 2}
+  type: 2

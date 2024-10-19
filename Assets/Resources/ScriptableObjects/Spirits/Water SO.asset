@@ -17,9 +17,9 @@ MonoBehaviour:
   introDialogue: 
   prerequisite: 0
   prerequisites:
-  - entitySO: {fileID: 0}
+  - entity: {fileID: 0}
     taskSO: {fileID: 0}
-  - entitySO: {fileID: 0}
+  - entity: {fileID: 0}
     taskSO: {fileID: 0}
   type: 1
   tasks: []

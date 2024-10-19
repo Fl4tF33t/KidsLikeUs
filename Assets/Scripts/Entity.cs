@@ -1,16 +1,37 @@
+using System;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Entity : MonoBehaviour
 {
+    public event Action<string> OnStartDialogue;
     public EntitySO entitySO;
-    public enum EntityStatus { None, InProgress, Completed}
+
+    public InputActionReference interactInputActionReference;
+
+    public enum Status { None, InProgress, Completed}
     [SerializeField]
-    private EntityStatus entityStatus = EntityStatus.None;
+    private Status entityStatus = Status.None;
+    public Status EntityStatus 
+    { 
+        get { return entityStatus; } 
+        protected set { entityStatus = value; }
+    }
     private bool firstTimeInteraction = true;
 
     private void Awake()
     {
         InitializeEntity();
+    }
+
+    private void OnEnable()
+    {
+        interactInputActionReference.action.performed += Interact;
+    }
+    private void OnDisable()
+    {
+        interactInputActionReference.action.performed -= Interact;
     }
 
     protected virtual void InitializeEntity()
@@ -22,23 +43,20 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public virtual void Interact()
+    public virtual void Interact(InputAction.CallbackContext context = default)
     {
-        if (entitySO.prerequisite)
+        if (entitySO.hasPrerequisite)
         {
-            foreach (Prerequisites prerequisite in entitySO.prerequisites)
+            if (!entitySO.prerequisites.CheckPrerequisite())
             {
-                if (!prerequisite.CheckPrerequisite())
-                {
-                    Debug.Log("Prerequisite not met");
-                    UnavailableInteraction();
-                    return;
-                }
+                Debug.Log("Prerequisite not met");
+                UnavailableInteraction();
+                return;
             }
         }
         if (firstTimeInteraction)
         {
-            entityStatus = EntityStatus.InProgress;
+            entityStatus = Status.InProgress;
             firstTimeInteraction = false;
             FirstTimeInteraction();
         }
@@ -53,10 +71,7 @@ public class Entity : MonoBehaviour
     protected virtual void FirstTimeInteraction()
     {
         //Do something for the first time, intro and tell about itself
+        OnStartDialogue?.Invoke(entitySO.introDialogue);
     }
 
-    public EntityStatus GetEntityStatus()
-    {
-        return entityStatus;
-    }
 }

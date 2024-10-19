@@ -6,13 +6,15 @@ using UnityEditor;
 public class EntitySO : ScriptableObject
 {
     public string entityName;
-    [TextArea(3, 7)]
     public string entityDescription;
     [TextArea(3, 7)]
     public string introDialogue;
-
-    public bool prerequisite;
-    public Prerequisites[] prerequisites;
+    [TextArea(3, 7)]
+    public string unavailableDialogue;
+    public bool hasPrerequisite;
+    public Prerequisites prerequisites;
+    public bool hasTask;
+    public TaskSO[] tasks;
 
     public virtual void ValidateEntityData()
     {

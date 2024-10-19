@@ -1,3 +1,4 @@
+using UnityEngine.InputSystem;
 public class Spirit : Entity
 {
     protected override void InitializeEntity()
@@ -9,8 +10,8 @@ public class Spirit : Entity
         } 
     }
 
-    public override void Interact()
+    public override void Interact(InputAction.CallbackContext context)
     {
-        base.Interact();
+        base.Interact(context);
     }
 }
