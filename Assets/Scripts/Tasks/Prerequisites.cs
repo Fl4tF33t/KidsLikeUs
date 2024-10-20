@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 [Serializable]
 public class Prerequisites
@@ -19,8 +20,17 @@ public class Prerequisites
         //     else return false;
         // }
         
-        // else if (entity != null && taskSO == null)
-        //     return entity.EntityStatus == Entity.Status.Completed;
+        else if (entity != null && taskSO == null)
+        {
+            foreach (Entity e in entity)
+            {
+                if (e.EntityStatus != Entity.Status.Completed)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         // else if (taskSO != null && entity == null)
         //     return taskSO.taskState == TaskSO.State.Completed;

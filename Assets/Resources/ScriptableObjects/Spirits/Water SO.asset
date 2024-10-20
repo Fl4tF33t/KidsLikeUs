@@ -15,11 +15,12 @@ MonoBehaviour:
   entityName: Water
   entityDescription: 
   introDialogue: 
-  prerequisite: 0
+  unavailableDialogue: 
+  hasPrerequisite: 0
   prerequisites:
-  - entity: {fileID: 0}
+    entity:
+    - {fileID: 0}
     taskSO: {fileID: 0}
-  - entity: {fileID: 0}
-    taskSO: {fileID: 0}
-  type: 1
+  hasTask: 0
   tasks: []
+  type: 1

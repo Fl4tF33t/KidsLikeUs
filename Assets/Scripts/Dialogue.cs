@@ -11,7 +11,7 @@ public class Dialogue : MonoBehaviour
     private TextMeshProUGUI dialogueText;
 
     private bool isActive = false;
-    private void Start()
+    private void Awake()
     {
         entityBrain = GetComponent<Entity>();
     }

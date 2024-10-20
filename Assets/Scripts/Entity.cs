@@ -1,9 +1,9 @@
 using System;
-using System.Linq;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Entity : MonoBehaviour
+public class Entity : MonoBehaviour, ISaveable
 {
     public event Action<string> OnStartDialogue;
     public EntitySO entitySO;
@@ -16,15 +16,27 @@ public class Entity : MonoBehaviour
     public Status EntityStatus 
     { 
         get { return entityStatus; } 
-        protected set { entityStatus = value; }
+        protected set 
+        { 
+            entityStatus = value; 
+            SaveData();
+        }
     }
     private bool firstTimeInteraction = true;
 
     private void Awake()
     {
         InitializeEntity();
+        StartCoroutine(AfterInteractionEvents());
+    }
+    private IEnumerator AfterInteractionEvents()
+    {
+        yield return new WaitForSeconds(3f);
+        EntityStatus = Status.InProgress;
     }
 
+    //right now the entity subscribes and unsubscribes during enableing
+    //can change this to occur whenever, for example when the player enters a region or starts a section
     private void OnEnable()
     {
         interactInputActionReference.action.performed += Interact;
@@ -41,6 +53,8 @@ public class Entity : MonoBehaviour
             Debug.LogError("EntitySO is null");
             return;
         }
+
+        GameManager.Instance.Saveables.Add(this);
     }
 
     public virtual void Interact(InputAction.CallbackContext context = default)
@@ -74,4 +88,13 @@ public class Entity : MonoBehaviour
         OnStartDialogue?.Invoke(entitySO.introDialogue);
     }
 
+    public virtual void SaveData()
+    {
+        GameManager.Instance.SaveData();
+    }
+
+    public virtual void LoadData()
+    {
+        Debug.Log("loadData");
+    }
 }

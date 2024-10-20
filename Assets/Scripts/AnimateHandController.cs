@@ -13,13 +13,13 @@ public class AnimateHandController : MonoBehaviour
     private float triggerValue;
     
 
-    void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         gripValue = gripInputActionReference.action.ReadValue<float>();
         triggerValue = triggerInputActionReference.action.ReadValue<float>();

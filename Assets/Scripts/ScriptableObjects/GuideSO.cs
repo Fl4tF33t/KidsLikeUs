@@ -6,6 +6,4 @@ public class GuideSO : EntitySO
     public enum Type{ Wolf, Player}
 
     public Type type;
-
-    public TaskSO[] tasks;
 }

@@ -21,5 +21,5 @@ MonoBehaviour:
   taskState: 1
   prerequisite: 0
   prerequisites:
-  - entitySO: {fileID: 0}
+  - entity: []
     taskSO: {fileID: 11400000, guid: 992cba5c222bf004ea76da1a06ca03b3, type: 2}
