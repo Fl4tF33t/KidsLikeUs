@@ -35,4 +35,9 @@ public class JSONSaving : MonoBehaviour
         playerData = JsonUtility.FromJson<PlayerData>(json);
     }
 
+    public void ResetData()
+    {
+        playerData = new PlayerData();
+        SaveData();
+    }
 }

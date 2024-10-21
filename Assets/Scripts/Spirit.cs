@@ -18,14 +18,14 @@ public class Spirit : Entity
         base.Interact(context);
     }
 
-    public override void SaveData()
-    {
-        GameManager.Instance.jsonSaving.playerData.spirits.Find(spirit => spirit.spiritType == spiritSO.type).status = EntityStatus;
-        base.SaveData();
-    }
+    // public override void SaveData()
+    // {
+    //     GameManager.Instance.jsonSaving.playerData.spirits.Find(spirit => spirit.spiritType == spiritSO.type).status = EntityStatus;
+    //     base.SaveData();
+    // }
 
-    public override void LoadData()
-    {
-        EntityStatus = GameManager.Instance.jsonSaving.playerData.spirits.Find(spirit => spirit.spiritType == spiritSO.type).status;
-    }
+    // public override void LoadData()
+    // {
+    //     EntityStatus = GameManager.Instance.jsonSaving.playerData.spirits.Find(spirit => spirit.spiritType == spiritSO.type).status;
+    // }
 }

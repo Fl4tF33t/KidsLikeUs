@@ -1,10 +1,12 @@
 using System;
+using System.Linq;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Entity : MonoBehaviour, ISaveable
 {
+    SaveLoad saveLoad;
     public event Action<string> OnStartDialogue;
     public EntitySO entitySO;
 
@@ -18,12 +20,18 @@ public class Entity : MonoBehaviour, ISaveable
         get { return entityStatus; } 
         protected set 
         { 
+            if (entityStatus == value) return;
+
             entityStatus = value; 
             SaveData();
         }
     }
     private bool firstTimeInteraction = true;
 
+    private void OnValidate()
+    {
+        this.name = entitySO.entityName + " - " + this.GetInstanceID();
+    }
     private void Awake()
     {
         InitializeEntity();
@@ -31,7 +39,7 @@ public class Entity : MonoBehaviour, ISaveable
     }
     private IEnumerator AfterInteractionEvents()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(7f);
         EntityStatus = Status.InProgress;
     }
 
@@ -39,6 +47,7 @@ public class Entity : MonoBehaviour, ISaveable
     //can change this to occur whenever, for example when the player enters a region or starts a section
     private void OnEnable()
     {
+        
         interactInputActionReference.action.performed += Interact;
     }
     private void OnDisable()
@@ -53,8 +62,9 @@ public class Entity : MonoBehaviour, ISaveable
             Debug.LogError("EntitySO is null");
             return;
         }
-
-        GameManager.Instance.Saveables.Add(this);
+        saveLoad = GameManager.Instance.saveLoad;
+        saveLoad.AddSaveable(this);
+        //GameManager.Instance.saveLoad.AddSaveable(this);
     }
 
     public virtual void Interact(InputAction.CallbackContext context = default)
@@ -90,11 +100,13 @@ public class Entity : MonoBehaviour, ISaveable
 
     public virtual void SaveData()
     {
-        GameManager.Instance.SaveData();
+        if (saveLoad.HasEntity(this.name))
+            GameManager.Instance.jsonSaving.playerData.entities.Find(entity => entity.uniqueID == this.name).status = entityStatus;
     }
 
     public virtual void LoadData()
     {
-        Debug.Log("loadData");
+        if (saveLoad.HasEntity(this.name))
+            EntityStatus = saveLoad.GetEntityData(this.name).status;
     }
 }

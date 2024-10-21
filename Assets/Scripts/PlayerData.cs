@@ -1,27 +1,17 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 
 [Serializable]
 public class PlayerData
 {
-    public List<Spirit> spirits; 
-    public PlayerData()
-    {
-        spirits = new List<Spirit>();
-        foreach(SpiritSO.Type spiritType in Enum.GetValues(typeof(SpiritSO.Type)))
-        {
-            Spirit spirit = new Spirit();
-            spirit.spiritType = spiritType;
-            spirit.status = Entity.Status.None;
-            spirits.Add(spirit);
-        }
-    }
+    public PlayerData() { entities = new List<EntityData>(); }
+    public List<EntityData> entities;
+
     [Serializable]
-    public class Spirit
+    public class EntityData
     {
-        public SpiritSO.Type spiritType;
+        public string uniqueID;
         public Entity.Status status;
     }
 }

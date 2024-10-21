@@ -1,37 +1,23 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 [DefaultExecutionOrder(-100)]
 [RequireComponent(typeof(JSONSaving))]
+[RequireComponent(typeof(SaveLoad))]
 public class GameManager : Singleton<GameManager>
 {
     public JSONSaving jsonSaving;
-    private List<ISaveable> saveables = new List<ISaveable>();
+    public SaveLoad saveLoad;
 
-    public List<ISaveable> Saveables
-    {
-        get { return saveables; }
-        set 
-        { 
-            saveables = value; 
-            SaveData();
-        }
-    }
     protected override void Awake()
     {
         base.Awake();
-        jsonSaving = GetComponent<JSONSaving>();
+        if(jsonSaving == null)
+            jsonSaving = GetComponent<JSONSaving>();
+        
+        if(saveLoad == null)
+            saveLoad = GetComponent<SaveLoad>();
     }
-
-    private void Start()
-    {
-        if (saveables.Count > 0)
-        {
-            foreach (ISaveable saveable in saveables)    
-            {
-                saveable.LoadData();
-            }
-        }
-    }
-    public void SaveData() {jsonSaving.SaveData();}
+    
 }

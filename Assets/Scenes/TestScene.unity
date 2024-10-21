@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 420757732}
   - component: {fileID: 420757731}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Snowflake - 29434
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -916,7 +916,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &909700191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1887,6 +1887,7 @@ GameObject:
   - component: {fileID: 2050718530}
   - component: {fileID: 2050718529}
   - component: {fileID: 2050718531}
+  - component: {fileID: 2050718532}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1906,7 +1907,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8bbe136314be794ea89f54d537cc505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jsonSaving: {fileID: 0}
+  jsonSaving: {fileID: 2050718531}
+  saveLoad: {fileID: 0}
 --- !u!4 &2050718530
 Transform:
   m_ObjectHideFlags: 0
@@ -1935,7 +1937,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData:
-    spirits: []
+    entities: []
+--- !u!114 &2050718532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050718528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e5a1ba6b3f0e64ca86ad11d8c18761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
