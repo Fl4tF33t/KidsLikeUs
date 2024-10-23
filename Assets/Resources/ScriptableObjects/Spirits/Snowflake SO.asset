@@ -20,7 +20,7 @@ MonoBehaviour:
   hasPrerequisite: 1
   prerequisites:
     entitySO:
-    - {fileID: 11400000}
+    - {fileID: 11400000, guid: 1ef2d1cf3b0231b4380d9b9d72081d36, type: 2}
     taskSO: {fileID: 0}
   hasTask: 0
   tasks:

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Earth SO
   m_EditorClassIdentifier: 
   entityName: Earth
-  uniqueID: 
+  uniqueID: dfg3
   entityDescription: 
   introDialogue: 
   unavailableDialogue: 

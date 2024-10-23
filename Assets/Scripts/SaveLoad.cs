@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-80)]
 public class SaveLoad : MonoBehaviour
 {
     private List<ISaveable> saveables = new List<ISaveable>();
@@ -9,34 +10,35 @@ public class SaveLoad : MonoBehaviour
     public void AddSaveable(ISaveable saveable)
     {
         if (!saveables.Contains(saveable))
+        {
             saveables.Add(saveable);
+            InitializeEntity(saveable);
+        }
     }
 
-    private void Start()
+    private void InitializeEntity(ISaveable saveable)
     {
-        foreach (ISaveable saveable in saveables)
+        if (saveable is Entity entity)
         {
-            if (saveable is Entity entity)
+            if (!HasEntity(entity.entityData.UniqueID))
             {
-                if (!GameManager.Instance.jsonSaving.playerData.entities.Any(e => e.uniqueID == entity.UniqueID))
-                {
-                    GameManager.Instance.jsonSaving.playerData.entities.Add(new PlayerData.EntityData() { uniqueID = entity.UniqueID, status = entity.EntityStatus }); 
-                }
+                GameManager.Instance.jsonSaving.playerData.entities.Add(new PlayerData.EntityData(entity.entityData.UniqueID) { UniqueID = entity.entityData.UniqueID, Status = entity.entityData.Status, FirstTimeInteraction = entity.entityData.FirstTimeInteraction });
             }
-      
-            saveable.LoadData();
+            else
+                entity.LoadData();
         }
     }
 
     public bool HasEntity(string uniqueID)
     {
-        return GameManager.Instance.jsonSaving.playerData.entities.Any(e => e.uniqueID == uniqueID);
+        return GameManager.Instance.jsonSaving.playerData.entities.Any(e => e.UniqueID == uniqueID);
     }
     public PlayerData.EntityData GetEntityData(string uniqueID)
     {
         if (HasEntity(uniqueID))
-            return GameManager.Instance.jsonSaving.playerData.entities.Find(e => e.uniqueID == uniqueID);
+            return GameManager.Instance.jsonSaving.playerData.entities.Find(e => e.UniqueID == uniqueID);
 
+        Debug.LogError("EntityData not found: " + uniqueID);
         return null;
     }
 

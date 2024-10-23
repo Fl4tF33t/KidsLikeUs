@@ -1,6 +1,7 @@
 using System.IO;
 using UnityEngine;
 
+[DefaultExecutionOrder(-90)]
 public class JSONSaving : MonoBehaviour
 {
     public PlayerData playerData;

@@ -6,33 +6,15 @@ using UnityEngine.InputSystem;
 public class Entity : MonoBehaviour, ISaveable
 {
     #region SaveLoad
-    private SaveLoad saveLoad;// = GameManager.Instance.saveLoad;
-    private string uniqueID;
-    public string UniqueID 
-    { 
-        get { return uniqueID; } 
-    }
+    private SaveLoad saveLoad;
+    [SerializeField]
+    public PlayerData.EntityData entityData;
     #endregion
     public event Action<string> OnStartDialogue;
     public EntitySO entitySO;
 
+    public enum Status { None, InProgress, Completed }
     public InputActionReference interactInputActionReference;
-
-    public enum Status { None, InProgress, Completed}
-    [SerializeField]
-    private Status entityStatus = Status.None;
-    public Status EntityStatus 
-    { 
-        get { return entityStatus; } 
-        protected set 
-        { 
-            if (entityStatus == value) return;
-
-            entityStatus = value; 
-            SaveData();
-        }
-    }
-    private bool firstTimeInteraction = true;
 
     private void OnValidate()
     {
@@ -49,17 +31,6 @@ public class Entity : MonoBehaviour, ISaveable
         Interact();
     }
 
-    //right now the entity subscribes and unsubscribes during enableing
-    //can change this to occur whenever, for example when the player enters a region or starts a section
-    private void OnEnable()
-    {
-        interactInputActionReference.action.performed += Interact;
-    }
-    private void OnDisable()
-    {
-        interactInputActionReference.action.performed -= Interact;
-    }
-
     protected virtual void InitializeEntity()
     {
         if (entitySO == null)
@@ -68,11 +39,23 @@ public class Entity : MonoBehaviour, ISaveable
             return;
         }
 
+        entityData = new PlayerData.EntityData(entitySO.entityName + entitySO.uniqueID);
         saveLoad = GameManager.Instance.saveLoad;
-        uniqueID = entitySO.entityName + entitySO.uniqueID;
         saveLoad.AddSaveable(this);
     }
 
+    //right now the entity subscribes and unsubscribes during enableing
+    //can change this to occur whenever, for example when the player enters a region or starts a section
+    private void OnEnable()
+    {
+        entityData.OnEntityDataChanged += SaveData;
+        interactInputActionReference.action.performed += Interact;
+    }
+    private void OnDisable()
+    {
+        entityData.OnEntityDataChanged -= SaveData;
+        interactInputActionReference.action.performed -= Interact;
+    }
     public virtual void Interact(InputAction.CallbackContext context = default)
     {
         if (entitySO.hasPrerequisite)
@@ -84,10 +67,10 @@ public class Entity : MonoBehaviour, ISaveable
                 return;
             }
         }
-        if (firstTimeInteraction)
+        if (entityData.FirstTimeInteraction)
         {
-            EntityStatus = Status.InProgress;
-            firstTimeInteraction = false;
+            entityData.Status = Status.InProgress;
+            entityData.FirstTimeInteraction = false;
             FirstTimeInteraction();
         }
         Debug.Log("Prerequisite met");
@@ -105,15 +88,19 @@ public class Entity : MonoBehaviour, ISaveable
         OnStartDialogue?.Invoke(entitySO.introDialogue);
     }
 
+
     public virtual void SaveData()
     {
-        if (saveLoad.HasEntity(uniqueID))
-            saveLoad.GetEntityData(uniqueID).status = EntityStatus;
+        if (saveLoad.HasEntity(entityData.UniqueID))
+        {
+            saveLoad.GetEntityData(entityData.UniqueID).Status = entityData.Status;
+            saveLoad.GetEntityData(entityData.UniqueID).FirstTimeInteraction = entityData.FirstTimeInteraction;
+        }
     }
 
     public virtual void LoadData()
     {
-        if (saveLoad.HasEntity(uniqueID))
-            EntityStatus = saveLoad.GetEntityData(uniqueID).status;
+        if (saveLoad.HasEntity(entityData.UniqueID))
+            entityData = saveLoad.GetEntityData(entityData.UniqueID);
     }
 }

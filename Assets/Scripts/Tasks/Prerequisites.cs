@@ -25,7 +25,7 @@ public class Prerequisites
             {
                 if (GameManager.Instance.saveLoad.HasEntity(e.entityName + e.uniqueID))
                 {
-                    if(GameManager.Instance.saveLoad.GetEntityData(e.entityName + e.uniqueID).status != Entity.Status.Completed)
+                    if(GameManager.Instance.saveLoad.GetEntityData(e.entityName + e.uniqueID).Status != Entity.Status.Completed)
                         return false;
                 }
             }
