@@ -6,6 +6,7 @@ using UnityEditor;
 public class EntitySO : ScriptableObject
 {
     public string entityName;
+    public string uniqueID;
     public string entityDescription;
     [TextArea(3, 7)]
     public string introDialogue;

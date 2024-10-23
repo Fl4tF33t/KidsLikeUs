@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d773257d62888946a9da6f3dcf203fc, type: 3}
   m_Name: Earth SO
   m_EditorClassIdentifier: 
-  entity:
-    name: 
-    description: 
-    introDialogue: 
   entityName: Earth
-  description: 
+  uniqueID: 
+  entityDescription: 
   introDialogue: 
-  type: 3
+  unavailableDialogue: 
+  hasPrerequisite: 0
+  prerequisites:
+    entitySO: []
+    taskSO: {fileID: 0}
+  hasTask: 0
   tasks: []
+  type: 3

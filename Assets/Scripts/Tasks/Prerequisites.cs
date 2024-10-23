@@ -1,15 +1,14 @@
 using System;
-using System.Diagnostics;
 
 [Serializable]
 public class Prerequisites
 {
-    public Entity[] entity;
+    public EntitySO[] entitySO;
     public TaskSO taskSO;
 
     public bool CheckPrerequisite()
     {
-        if (entity == null && taskSO == null)
+        if (entitySO == null && taskSO == null)
            return true;
 
         // else if (entity != null && taskSO != null)
@@ -20,22 +19,19 @@ public class Prerequisites
         //     else return false;
         // }
         
-        else if (entity != null && taskSO == null)
+        if (entitySO != null)
         {
-            foreach (Entity e in entity)
+            foreach (EntitySO e in entitySO)
             {
-                if (e.EntityStatus != Entity.Status.Completed)
+                if (GameManager.Instance.saveLoad.HasEntity(e.entityName + e.uniqueID))
                 {
-                    return false;
+                    if(GameManager.Instance.saveLoad.GetEntityData(e.entityName + e.uniqueID).status != Entity.Status.Completed)
+                        return false;
                 }
             }
             return true;
         }
 
-        // else if (taskSO != null && entity == null)
-        //     return taskSO.taskState == TaskSO.State.Completed;
-
-        // else 
         return false;
     }
 }

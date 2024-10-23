@@ -18,6 +18,7 @@ public class EntitySOEditor : Editor
         EditorGUILayout.Space(5);
         EditorGUI.indentLevel++;
         EditorGUILayout.PropertyField(serializedObject.FindProperty("entityName"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("uniqueID"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("entityDescription"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("introDialogue"));
         EditorGUILayout.Space(15);
@@ -27,7 +28,7 @@ public class EntitySOEditor : Editor
         if (entitySO.hasPrerequisite)
         {
             EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("unavailableDialogue"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("unavailableDialogue"), true);
             EditorGUI.indentLevel += 2;
             EditorGUILayout.PropertyField(serializedObject.FindProperty("prerequisites"), true);
             EditorGUI.indentLevel -= 3;

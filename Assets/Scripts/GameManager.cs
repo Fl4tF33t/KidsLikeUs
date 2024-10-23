@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
         
         if(saveLoad == null)
             saveLoad = GetComponent<SaveLoad>();
+
     }
-    
+
 }

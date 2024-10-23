@@ -18,9 +18,9 @@ public class SaveLoad : MonoBehaviour
         {
             if (saveable is Entity entity)
             {
-                if (!GameManager.Instance.jsonSaving.playerData.entities.Any(e => e.uniqueID == entity.name))
+                if (!GameManager.Instance.jsonSaving.playerData.entities.Any(e => e.uniqueID == entity.UniqueID))
                 {
-                    GameManager.Instance.jsonSaving.playerData.entities.Add(new PlayerData.EntityData() { uniqueID = entity.name, status = entity.EntityStatus }); 
+                    GameManager.Instance.jsonSaving.playerData.entities.Add(new PlayerData.EntityData() { uniqueID = entity.UniqueID, status = entity.EntityStatus }); 
                 }
             }
       
@@ -38,14 +38,6 @@ public class SaveLoad : MonoBehaviour
             return GameManager.Instance.jsonSaving.playerData.entities.Find(e => e.uniqueID == uniqueID);
 
         return null;
-    }
-
-    public void SaveData<T>(T saveable, string uniqueID = null) 
-    {
-        if (uniqueID != null)
-        {
-            
-        }   
     }
 
     private void OnApplicationQuit()

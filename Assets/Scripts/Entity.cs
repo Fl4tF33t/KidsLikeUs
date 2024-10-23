@@ -1,12 +1,18 @@
 using System;
-using System.Linq;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Entity : MonoBehaviour, ISaveable
 {
-    SaveLoad saveLoad;
+    #region SaveLoad
+    private SaveLoad saveLoad;// = GameManager.Instance.saveLoad;
+    private string uniqueID;
+    public string UniqueID 
+    { 
+        get { return uniqueID; } 
+    }
+    #endregion
     public event Action<string> OnStartDialogue;
     public EntitySO entitySO;
 
@@ -30,7 +36,7 @@ public class Entity : MonoBehaviour, ISaveable
 
     private void OnValidate()
     {
-        this.name = entitySO.entityName + " - " + this.GetInstanceID();
+        this.name = entitySO.entityName;
     }
     private void Awake()
     {
@@ -39,15 +45,14 @@ public class Entity : MonoBehaviour, ISaveable
     }
     private IEnumerator AfterInteractionEvents()
     {
-        yield return new WaitForSeconds(7f);
-        EntityStatus = Status.InProgress;
+        yield return new WaitForSeconds(3f);
+        Interact();
     }
 
     //right now the entity subscribes and unsubscribes during enableing
     //can change this to occur whenever, for example when the player enters a region or starts a section
     private void OnEnable()
     {
-        
         interactInputActionReference.action.performed += Interact;
     }
     private void OnDisable()
@@ -62,9 +67,10 @@ public class Entity : MonoBehaviour, ISaveable
             Debug.LogError("EntitySO is null");
             return;
         }
+
         saveLoad = GameManager.Instance.saveLoad;
+        uniqueID = entitySO.entityName + entitySO.uniqueID;
         saveLoad.AddSaveable(this);
-        //GameManager.Instance.saveLoad.AddSaveable(this);
     }
 
     public virtual void Interact(InputAction.CallbackContext context = default)
@@ -80,10 +86,11 @@ public class Entity : MonoBehaviour, ISaveable
         }
         if (firstTimeInteraction)
         {
-            entityStatus = Status.InProgress;
+            EntityStatus = Status.InProgress;
             firstTimeInteraction = false;
             FirstTimeInteraction();
         }
+        Debug.Log("Prerequisite met");
     }
 
     protected virtual void UnavailableInteraction()
@@ -100,13 +107,13 @@ public class Entity : MonoBehaviour, ISaveable
 
     public virtual void SaveData()
     {
-        if (saveLoad.HasEntity(this.name))
-            GameManager.Instance.jsonSaving.playerData.entities.Find(entity => entity.uniqueID == this.name).status = entityStatus;
+        if (saveLoad.HasEntity(uniqueID))
+            saveLoad.GetEntityData(uniqueID).status = EntityStatus;
     }
 
     public virtual void LoadData()
     {
-        if (saveLoad.HasEntity(this.name))
-            EntityStatus = saveLoad.GetEntityData(this.name).status;
+        if (saveLoad.HasEntity(uniqueID))
+            EntityStatus = saveLoad.GetEntityData(uniqueID).status;
     }
 }
