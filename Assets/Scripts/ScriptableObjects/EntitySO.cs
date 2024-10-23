@@ -17,8 +17,11 @@ public class EntitySO : ScriptableObject
     public bool hasTask;
     public TaskSO[] tasks;
 
-    public virtual void ValidateEntityData()
+    private void OnValidate()
     {
+        if (name == entityName + " SO")
+            return;
+
         name = entityName + " SO";
 
         // Update the asset name in the project window

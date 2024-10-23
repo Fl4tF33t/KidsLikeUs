@@ -17,10 +17,10 @@ MonoBehaviour:
   entityDescription: 
   introDialogue: 
   unavailableDialogue: 
-  hasPrerequisite: 0
+  hasPrerequisite: 1
   prerequisites:
     entitySO: []
     taskSO: {fileID: 0}
-  hasTask: 0
+  hasTask: 1
   tasks: []
-  type: 3
+  type: 0

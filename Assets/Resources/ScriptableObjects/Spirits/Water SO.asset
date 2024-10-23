@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Water SO
   m_EditorClassIdentifier: 
   entityName: Water
+  uniqueID: 
   entityDescription: 
   introDialogue: 
   unavailableDialogue: 
-  hasPrerequisite: 0
+  hasPrerequisite: 1
   prerequisites:
-    entity:
-    - {fileID: 0}
+    entitySO: []
     taskSO: {fileID: 0}
-  hasTask: 0
+  hasTask: 1
   tasks: []
-  type: 1
+  type: 0

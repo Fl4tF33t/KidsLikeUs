@@ -42,12 +42,6 @@ public class EntitySOEditor : Editor
         }
 
         serializedObject.ApplyModifiedProperties();
-
-        if (GUILayout.Button("Validate Entity Data"))
-        {
-            // Call the PrintEntityName method when the button is pressed
-            entitySO.ValidateEntityData();
-        }
     }
 }
 #endif

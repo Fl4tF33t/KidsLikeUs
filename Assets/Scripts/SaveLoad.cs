@@ -21,9 +21,8 @@ public class SaveLoad : MonoBehaviour
         if (saveable is Entity entity)
         {
             if (!HasEntity(entity.entityData.UniqueID))
-            {
-                GameManager.Instance.jsonSaving.playerData.entities.Add(new PlayerData.EntityData(entity.entityData.UniqueID) { UniqueID = entity.entityData.UniqueID, Status = entity.entityData.Status, FirstTimeInteraction = entity.entityData.FirstTimeInteraction });
-            }
+                GameManager.Instance.jsonSaving.playerData.entities.Add(entity.entityData);
+            
             else
                 entity.LoadData();
         }

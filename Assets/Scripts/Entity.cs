@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,11 +9,13 @@ public class Entity : MonoBehaviour, ISaveable
     [SerializeField]
     public PlayerData.EntityData entityData;
     #endregion
-    public event Action<string> OnStartDialogue;
     public EntitySO entitySO;
 
     public enum Status { None, InProgress, Completed }
+    #region Interactions
+    public event Action<string> OnStartDialogue;
     public InputActionReference interactInputActionReference;
+    #endregion
 
     private void OnValidate()
     {
@@ -23,12 +24,6 @@ public class Entity : MonoBehaviour, ISaveable
     private void Awake()
     {
         InitializeEntity();
-        StartCoroutine(AfterInteractionEvents());
-    }
-    private IEnumerator AfterInteractionEvents()
-    {
-        yield return new WaitForSeconds(3f);
-        Interact();
     }
 
     protected virtual void InitializeEntity()

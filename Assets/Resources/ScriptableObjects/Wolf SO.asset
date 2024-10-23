@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed5db3c0c88b2543bcad11942a67d1c, type: 3}
   m_Name: Wolf SO
   m_EditorClassIdentifier: 
-  entity:
-    name: 
-    description: 
-    introDialogue: 
-  type: 0
+  entityName: Wolf
+  uniqueID: 'sdf '
+  entityDescription: 'df '
+  introDialogue: 'dsfsd '
+  unavailableDialogue: 
+  hasPrerequisite: 1
+  prerequisites:
+    entitySO: []
+    taskSO: {fileID: 0}
+  hasTask: 1
   tasks:
   - {fileID: 11400000, guid: c9ea0c542e210f14d8ca0acfe937732e, type: 2}
+  type: 0

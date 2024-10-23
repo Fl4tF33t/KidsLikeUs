@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerData
 {
     public PlayerData() { entities = new List<EntityData>(); }
+
+    //can make another class for example the settings of the player, or the player's inventory etc..
     public List<EntityData> entities;
 
     [Serializable]
