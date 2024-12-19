@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29601348805e6bb468bd4a681de3bce1, type: 3}
-  m_Name: Snow Task - 2
+  m_Name: Player Task - 3
   m_EditorClassIdentifier: 
   taskName: Fix the snow flake
   taskDescription: FFice thje obj here and there you are done
   holder: 1
   spiritType: 0
   otherType: 1
-  taskID: 2
-  taskState: 1
-  prerequisite: 0
+  taskID: 3
+  hasPrerequisite: 0
   prerequisites:
-  - entity: []
+  - entitySO: []
     taskSO: {fileID: 11400000, guid: 992cba5c222bf004ea76da1a06ca03b3, type: 2}

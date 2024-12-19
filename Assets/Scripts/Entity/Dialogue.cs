@@ -7,13 +7,14 @@ public class Dialogue : MonoBehaviour
 
     [SerializeField]
     private GameObject canvas;
-    [SerializeField]
     private TextMeshProUGUI dialogueText;
 
     private bool isActive = false;
     private void Awake()
     {
         entityBrain = GetComponent<Entity>();
+        dialogueText = canvas.GetComponentInChildren<TextMeshProUGUI>();
+        canvas.GetComponent<Canvas>().worldCamera = Camera.main;
     }
 
     private void OnEnable()
@@ -35,5 +36,6 @@ public class Dialogue : MonoBehaviour
         isActive = true;
         dialogueText.text = dialogue;
         canvas.SetActive(true);
+        //need to add a way to stop the dialogue
     }
 }

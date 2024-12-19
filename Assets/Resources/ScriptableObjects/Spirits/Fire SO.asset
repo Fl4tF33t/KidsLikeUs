@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: Fire SO
   m_EditorClassIdentifier: 
   entityName: Fire
-  description: 
+  uniqueID: 
+  entityDescription: 
   introDialogue: 
+  unavailableDialogue: 
+  hasPrerequisite: 0
+  prerequisites:
+    entitySO: []
+    taskSO: {fileID: 0}
+  hasTask: 0
+  tasks: []
   type: 2

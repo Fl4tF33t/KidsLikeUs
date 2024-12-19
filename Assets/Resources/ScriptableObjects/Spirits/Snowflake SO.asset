@@ -15,14 +15,14 @@ MonoBehaviour:
   entityName: Snowflake
   uniqueID: 39vnm
   entityDescription: 
-  introDialogue: Welcome to this safe space.....
-  unavailableDialogue: 
+  introDialogue: Welcome to this safe space.....I am....
+  unavailableDialogue: 'Before continuing, please do the following: ...'
   hasPrerequisite: 1
   prerequisites:
     entitySO:
     - {fileID: 11400000, guid: 1ef2d1cf3b0231b4380d9b9d72081d36, type: 2}
     taskSO: {fileID: 0}
-  hasTask: 0
+  hasTask: 1
   tasks:
   - {fileID: 11400000, guid: c9ea0c542e210f14d8ca0acfe937732e, type: 2}
   - {fileID: 11400000, guid: 992cba5c222bf004ea76da1a06ca03b3, type: 2}

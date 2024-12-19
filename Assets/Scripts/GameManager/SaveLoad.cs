@@ -26,16 +26,38 @@ public class SaveLoad : MonoBehaviour
             else
                 entity.LoadData();
         }
+        if (saveable is Task task)
+        {
+            foreach(PlayerData.TaskData taskData in task.taskData)
+            {
+                if(!HasTask(taskData.UniqueID))
+                    GameManager.Instance.jsonSaving.playerData.tasks.Add(taskData);
+            }
+            task.LoadData();
+        }
     }
 
     public bool HasEntity(string uniqueID)
     {
         return GameManager.Instance.jsonSaving.playerData.entities.Any(e => e.UniqueID == uniqueID);
     }
+
+    public bool HasTask(string uniqueID)
+    {
+        return GameManager.Instance.jsonSaving.playerData.tasks.Any(e => e.UniqueID == uniqueID);
+    }
     public PlayerData.EntityData GetEntityData(string uniqueID)
     {
         if (HasEntity(uniqueID))
             return GameManager.Instance.jsonSaving.playerData.entities.Find(e => e.UniqueID == uniqueID);
+
+        Debug.LogError("EntityData not found: " + uniqueID);
+        return null;
+    }
+    public PlayerData.TaskData GetTaskData(string uniqueID)
+    {
+        if (HasTask(uniqueID))
+            return GameManager.Instance.jsonSaving.playerData.tasks.Find(e => e.UniqueID == uniqueID);
 
         Debug.LogError("EntityData not found: " + uniqueID);
         return null;

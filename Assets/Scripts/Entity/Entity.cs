@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Dialogue))]
 public class Entity : MonoBehaviour, ISaveable
 {
     #region SaveLoad
@@ -11,7 +12,6 @@ public class Entity : MonoBehaviour, ISaveable
     #endregion
     public EntitySO entitySO;
 
-    public enum Status { None, InProgress, Completed }
     #region Interactions
     public event Action<string> OnStartDialogue;
     public InputActionReference interactInputActionReference;
@@ -19,6 +19,11 @@ public class Entity : MonoBehaviour, ISaveable
 
     private void OnValidate()
     {
+        if (entitySO == null)
+        {
+            Debug.LogError("Ensure there is a EntitySO assigned");
+            return;
+        }
         this.name = entitySO.entityName;
     }
     private void Awake()
@@ -34,7 +39,7 @@ public class Entity : MonoBehaviour, ISaveable
             return;
         }
 
-        entityData = new PlayerData.EntityData(entitySO.entityName + entitySO.uniqueID);
+        entityData = new PlayerData.EntityData(entitySO);
         saveLoad = GameManager.Instance.saveLoad;
         saveLoad.AddSaveable(this);
     }
@@ -51,6 +56,9 @@ public class Entity : MonoBehaviour, ISaveable
         entityData.OnEntityDataChanged -= SaveData;
         interactInputActionReference.action.performed -= Interact;
     }
+
+    protected void TriggerDialogueEvent(string arg) => OnStartDialogue?.Invoke(arg);
+
     public virtual void Interact(InputAction.CallbackContext context = default)
     {
         if (entitySO.hasPrerequisite)
@@ -64,22 +72,22 @@ public class Entity : MonoBehaviour, ISaveable
         }
         if (entityData.FirstTimeInteraction)
         {
-            entityData.Status = Status.InProgress;
+            entityData.Status = Utils.Status.InProgress;
             entityData.FirstTimeInteraction = false;
             FirstTimeInteraction();
+            return;
         }
         Debug.Log("Prerequisite met");
     }
 
     protected virtual void UnavailableInteraction()
     {
-        //what does this npc do if the prereq are not met, maybe inform them what they need to do
-        //or just say that this part is not available yet,  ask help from mthe guide
+        if(entitySO.hasPrerequisite)
+            OnStartDialogue?.Invoke(entitySO.unavailableDialogue);
     }
 
     protected virtual void FirstTimeInteraction()
     {
-        //Do something for the first time, intro and tell about itself
         OnStartDialogue?.Invoke(entitySO.introDialogue);
     }
 

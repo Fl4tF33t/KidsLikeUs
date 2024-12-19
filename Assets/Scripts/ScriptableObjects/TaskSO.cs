@@ -1,6 +1,4 @@
 using UnityEngine;
-using System;
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -13,7 +11,6 @@ public class TaskSO : ScriptableObject
     public string taskDescription;
     public enum TaskHolders
     {
-        None,
         Spirit,
         Other
     }
@@ -22,6 +19,7 @@ public class TaskSO : ScriptableObject
     public SpiritSO.Type spiritType;
     public enum OtherType
     {
+        None,
         Player,
         Wolf
     }
@@ -30,51 +28,27 @@ public class TaskSO : ScriptableObject
 
     [Min(1)]
     public int taskID;
-
-    public enum State{ Wait, InProgress, Completed, Failed}
-    public State taskState = State.Wait;
-    public bool prerequisite;
+    public bool hasPrerequisite;
     public Prerequisites[] prerequisites;
 
-
-    public virtual void StartTask()
-    {
-        if (prerequisite)
-        {
-            foreach (Prerequisites prerequisite in prerequisites)
-            {
-                if (!prerequisite.CheckPrerequisite())
-                {
-                    Debug.Log("Prerequisite not met");
-                    ChangeState(State.Failed);
-                    return;
-                }
-            }
-        }
-        Debug.Log("Starting task " + taskName);
-        ChangeState(State.InProgress);
-    }
-
-    public virtual void ChangeState(State newState)
-    {
-        taskState = newState;
-    }
     
-    public virtual void ValidateTaskData()
+    private void OnValidate()
     {
         string empty = "";
         switch (holder)
         {
-            case TaskHolders.None:
-                break;
             case TaskHolders.Spirit:
-                empty = spiritType.ToString();
+                empty = spiritType.ToString() + " Task - " + taskID;
                 break;
             case TaskHolders.Other:
-                empty = otherType.ToString();
+                empty = otherType.ToString() + " Task - " + taskID;
                 break;
         }
-        name = empty + " Task - " + taskID;
+
+        if (name == empty)
+            return;
+
+        name = empty;
 
         // Update the asset name in the project window
         #if UNITY_EDITOR
@@ -86,4 +60,5 @@ public class TaskSO : ScriptableObject
         }
         #endif
     }
+
 }
